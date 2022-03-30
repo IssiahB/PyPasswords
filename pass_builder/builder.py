@@ -55,8 +55,8 @@ class PasswordBuilder:
 			Returns:
 				str: The generated character
 		"""
-		specials = '&%$#@!*^{}[]<>?'
-		target = randint(0, 14)
+		specials = '&%$#@!*^{}[]<>?.,'
+		target = randint(0, 16)
 
 		return specials[target]
 
