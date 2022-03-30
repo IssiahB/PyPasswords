@@ -69,7 +69,7 @@ class DataStorage:
 					hash TEXT NOT NULL
 				);""")
 
-	def _create_hash(self, passw: str, salt=urandom(32): bytes) -> bytes:
+	def _create_hash(self, passw: str, salt: bytes=urandom(32)) -> bytes:
 		""" Creates a hash with a password given and the salt.
 
 			Params:
