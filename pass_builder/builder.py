@@ -44,10 +44,9 @@ class PasswordBuilder:
 			Returns:
 				str: The generated character
 		"""
-		value = randint(65, 90)
-		lower_case = bool(randint(0, 1))
-		# randomly switches between uppercase and lowercase
-		return str(chr(value)).lower() if lower_case else str(chr(value))
+		alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+		target = randint(0, 51)
+		return alphabet[target]
 
 	def _generate_special(self) -> str:
 		""" Generates a random special character a few
@@ -56,11 +55,10 @@ class PasswordBuilder:
 			Returns:
 				str: The generated character
 		"""
-		value = randint(33, 38)
-		if value == 34: # Skip the " character
-			value += 1
+		specials = '&%$#@!*^{}[]<>?'
+		target = randint(0, 14)
 
-		return str(chr(value))
+		return specials[target]
 
 	def _generate_number(self):
 		""" Generates a random digit character between

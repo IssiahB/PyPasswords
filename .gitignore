@@ -1,0 +1,4 @@
+pass.key
+__pycache__/
+userdata.db
+*.pyc

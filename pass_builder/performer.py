@@ -125,7 +125,7 @@ def print_help_action() -> None:
 
 			    -c		Create a new user
 
-			    -r		Removes current user
+			    -r		Remove current user
 
 			    -l		List all the previously
 					  generated passwords and
@@ -137,7 +137,7 @@ def print_help_action() -> None:
 
 			    -i		Login as different user
 
-			    -q		Quits the program
+			    -q		Quit the program
 		"""), 'green')
 	print('\n\n')
 
