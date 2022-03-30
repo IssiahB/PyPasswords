@@ -1,21 +1,61 @@
+""" This module holds the class responsible for building
+	the semi-randomly generated passwords
+"""
+
+
 from random import randint
+from typing import Callable
 
 
 class PasswordBuilder:
+	""" This class generates semi-random passwords
+		that can be stored under a user. Each object
+		of this class must have a length, special
+		character amount, and digit character amount.
+
+		The values given are used to generate a password
+		that has the same length as the one given, that
+		has the amount of special characters dispersed
+		randomly throughout, and has the amount of digit
+		characters dispersed randomly throughout.
+
+		Every special character is chosen randomly, and every
+		digit character is chosen randomly. The spots for each
+		character are also picked randomly. This allows for a
+		very secure password.
+	"""
+
 	def __init__(self, length, spec, num):
+		""" Creates a PasswordBuilder object with the length,
+			special character amount, and digit character amount
+			initialized.
+		"""
 		self.length = length
 		self.spec_len = spec
 		self.num_len = num
-		# Used for generating each value
+		# Used to make sure character places are not taken
 		self.character_places = {}
 
-	def _generate_letter(self):
+	def _generate_letter(self) -> str:
+		""" Generates a random character in the english
+			alphabet, and randomly has it be uppercase
+			or lowercase.
+
+			Returns:
+				str: The generated character
+		"""
 		value = randint(65, 90)
 		lower_case = bool(randint(0, 1))
 		# randomly switches between uppercase and lowercase
 		return str(chr(value)).lower() if lower_case else str(chr(value))
 
-	def _generate_special(self):
+	def _generate_special(self) -> str:
+		""" Generates a random special character a few
+			examples are '$, @, &, ...'.
+
+			Returns:
+				str: The generated character
+		"""
 		value = randint(33, 38)
 		if value == 34: # Skip the " character
 			value += 1
@@ -23,10 +63,16 @@ class PasswordBuilder:
 		return str(chr(value))
 
 	def _generate_number(self):
+		""" Generates a random digit character between
+			0 and 9.
+
+			Returns:
+				str: The generated character
+		"""
 		value = randint(48, 57)
 		return str(chr(value))
 
-	def _fill_dict(self, amount, generate_func):
+	def _fill_dict(self, amount, generate_func: Callable[[], str]):
 		""" Picks an empty spot in the password string
 			and replaces it with a generated character
 			from one of the _generate_***() methods.
@@ -42,7 +88,7 @@ class PasswordBuilder:
 							to be replaced by a generated
 							character
 
-				- generate_func: The function that will 
+				- generate_func: The method that will 
 							generate the new character
 		"""
 		for num in range(amount):
@@ -55,14 +101,20 @@ class PasswordBuilder:
 					self.character_places[index] = generate_func()
 					spot_found = True
 
-	def _check_valid(self):
+	def _is_valid(self) -> bool:
 		""" Checks if the amount of special and digit characters
 			can fit into the length of the password
+
+			Returns:
+				bool: True if the above statment is true, False
+					  otherwise
 		"""
-		return not (self.spec_len + self.num_len > self.length)
+		return (self.spec_len + self.num_len <= self.length)
 
 	def __call__(self):
-		if not self._check_valid():
+		""" Builds the random password
+		"""
+		if not self._is_valid():
 			return False
 
 		password = []
